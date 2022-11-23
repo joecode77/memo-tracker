@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load tailwind_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="max-w-lg mx-auto">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form|crispy}}
+    <button type="submit" class="w-full text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Send</button>
+        
+    </form>
+    
+</div>
+<style>
+    input, textarea{
+        border:1px solid #e0e0e0;
+    }
+</style>
+    
+
+  
+{% endblock content %}

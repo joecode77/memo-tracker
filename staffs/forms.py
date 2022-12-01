@@ -1,5 +1,6 @@
 from django import forms
-from .models import Document
+from .models import Document, User
+from django.contrib.auth.forms import UserCreationForm
 
 class SendDocumentForm(forms.ModelForm):
     class Meta:
@@ -11,5 +12,9 @@ class SendDocumentForm(forms.ModelForm):
             "document_description",
             "document_content"
         )
-    
 
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ("username",)

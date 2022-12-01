@@ -13,6 +13,11 @@
             <span class="mt-1 text-gray-500 text-sm">DATE</span>
             
           
+          {% elif sender_document.recipient.is_outside%}
+            <span class="mt-1 text-gray-500 text-sm">Sent - Out of CSIS</span>
+            <span class="mt-1 text-gray-500 text-sm">DATE</span>
+
+
           {% else %}
             <span class="mt-1 text-gray-500 text-sm">Sent But Not Received</span>
             <span class="mt-1 text-gray-500 text-sm">DATE</span>

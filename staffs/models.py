@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 
 
+
 class User(AbstractUser):
     is_outside = models.BooleanField(default=False)
     can_add_user = models.BooleanField(default=False)
@@ -21,6 +22,9 @@ class Document(models.Model):
     is_received = models.BooleanField(null=True)
     date_sent = models.DateTimeField(null=True, blank=True)
     document_content = models.FileField(upload_to="./static/files/", null=True)
+
+class Index(models.Model):
+    inverted_index = models.TextField(null=True, blank=True)
 
 
 

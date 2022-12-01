@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from.forms import SendDocumentForm
+from.forms import SendDocumentForm, CustomUserCreationForm
 from .models import Document
 
 def landing_page(request):
@@ -45,8 +45,9 @@ def receive_document(request):
 
 
         for document in documents:
-            document.is_received = True
-            document.save()
+            if document.recipient.is_outside == False:
+                document.is_received = True
+                document.save()
         return render(request, "./staffs/receive.html", context)
     else:
         return redirect(f"/login/?next={request.path}")
@@ -64,6 +65,32 @@ def dashboard(request):
         return render(request, "./staffs/dashboard.html", context)
     else:
         return redirect(f"/login/?next={request.path}")
+
+def add_user(request):
+    if request.user.is_authenticated and request.user.can_add_user:
+        form = CustomUserCreationForm()
+        context = {
+            "form": CustomUserCreationForm,
+        }
+        if request.method == "GET":
+            return render(request, "./staffs/add_user.html", context)
+        else:
+            form = CustomUserCreationForm(request.POST)
+            if form.is_valid():
+                print("FORM IS VALID")
+                new_user = form.save(commit=False)
+                new_user.is_outside=False
+                new_user.can_add_user=False
+                new_user.save()
+                return redirect("/select_send_or_receive")
+            else:
+                print("FORM IS INVALID")
+                form = CustomUserCreationForm(request.POST)
+                return render(request, "./staffs/add_user.html", {"form":form})
+            
+    else:
+         return redirect(f"/login/?next={request.path}")
+
 
 
 
